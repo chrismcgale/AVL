@@ -1,8 +1,10 @@
 #include "avl.h"
 
+//Constructor
 BST::BST(int i, BST* parent, BST* left, BST* right) : data{i}, height{0}, parent{parent}, left{left},  right{right}
 {}
 
+//Destructor
 BST::~BST()
 {
     if (left != nullptr) delete left;
@@ -21,11 +23,13 @@ BST* BST::insert(BST* root, int i)
 
 }
 
+//Updates height after insert/delete
 void AVL::setHeight(AVL& z) 
 {
     z.height = 1 + std::max(z.left->height, z.right->height);
 }
 
+//Rotates branches to ensure balance
 AVL* AVL::rotate_right(AVL* z) 
 {
     AVL* y = static_cast<AVL*>(z->left);
@@ -36,6 +40,7 @@ AVL* AVL::rotate_right(AVL* z)
     return y;
 }
 
+//Rotates branches to ensure balance
 AVL* AVL::rotate_left(AVL* z)
 {
     AVL* y = static_cast<AVL*>(z->right);
@@ -46,6 +51,7 @@ AVL* AVL::rotate_left(AVL* z)
     return y;
 }
 
+//Decides what rotatations are needed
 AVL* AVL::restruct(AVL& x, AVL& y, AVL& z) 
 {
     if (x.data < y.data  && y.data < z.data) return rotate_right(&z);
@@ -63,6 +69,7 @@ AVL* AVL::restruct(AVL& x, AVL& y, AVL& z)
     else return rotate_left(&z);
 }
 
+//Inserts new AVL node with data i
 AVL* AVL::insert(AVL* root, int i)
 {
     AVL* z = static_cast<AVL*>(BST::insert(root, i));
@@ -82,13 +89,13 @@ AVL* AVL::insert(AVL* root, int i)
     return ret;
 }
 
+//Returns leftmost node from b
 BST* BST::minSub(BST* b)
 {
     BST* curr = b;
     while (curr && curr->left != nullptr) curr = curr->left;
     return curr;
 }
-
 
 
 BST* BST::del(BST* root, int d)
@@ -129,9 +136,11 @@ BST* BST::del(BST* root, int d)
     return root;
 }
 
+//Deletes AVL with value d or prints not found
 void AVL::del(AVL * root, int d)
 {
     AVL* z = static_cast<AVL*>(BST::del(root, d));
+    if (z == nullptr ) cout << "Not found" << endl;
     while (z != nullptr) {
         if (z->left != nullptr && z->right != nullptr) {
             if (std::abs(z->left->height - z->right->height) > 1) {
@@ -153,12 +162,13 @@ BST* BST::search(BST* root, int s)
     else return BST::search(root->left, s);
 }
 
+//Returns AVL node with value s
 AVL* AVL::search(AVL* root,int s)
 {
    return static_cast<AVL*>(BST::search(root, s));
 }
 
-// Change to return boundary and topmost inside seperatly
+// * Change to return boundary and topmost inside seperatly *
 vector<BST*> BST::rangeSearch(BST* root, int x1, int x2)
 {
     if (root == nullptr) return;
@@ -176,6 +186,7 @@ vector<BST*> BST::rangeSearch(BST* root, int x1, int x2)
     if (root->data > x2) return BST::rangeSearch(root->left, x1, x2);
 }
 
+//Returns AVL nodes with data between x1 and x2
 vector<AVL*> AVL::rangeSearch(AVL* root, int x1, int x2)
 {
     vector<BST*> b = BST::rangeSearch(root, x1, x2);
