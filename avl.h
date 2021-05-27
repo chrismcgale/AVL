@@ -1,8 +1,12 @@
+#include <iostream>
 #include <algorithm>
 #include <memory>
 #include <vector>
 using std::vector;
 using std::unique_ptr;
+using std::cout;
+using std::cin;
+using std::endl;
 
 class BST {
         int data;
@@ -13,6 +17,7 @@ class BST {
         ~BST();
     public:
         friend class AVL;
+        BST(int data = 0, int height = -1);
         BST* insert(BST* root, int i);
         BST* del(BST* root, int d);
         BST* search(BST* root, int s);
@@ -25,6 +30,7 @@ class AVL : public BST {
         AVL* rotate_left(AVL* z);
         AVL* rotate_right(AVL* z);
     public:
+        AVL() {};
         AVL* insert(AVL* root, int i);
         void del(AVL* root, int d);
         AVL* search(AVL* root, int s);

@@ -1,12 +1,26 @@
 #include "rangeTree.h"
 
-rangeTreeY::rangeTreeY(rangeTreeX* v)
+void rangeTreeY::insert(rangeTreeY* root, Point i)
 {
-    
+    rangeTreeY* z = static_cast<rangeTreeY*>(AVL::insert(root, i.x));
+    z->val = i;
 }
 
-rangeTreeY::rangeTreeY(Point v, rangeTreeX* l, rangeTreeX* r) : val{v}, left{l}, right{r}
+rangeTreeY* rangeTreeY::xy(rangeTreeX* x, rangeTreeY* y)
 {
+    if (!y) return nullptr;
+
+    rangeTreeY::insert(y, x->getVal());
+    xy(x->getRight(), y);
+    xy(x->getLeft(), y);
+
+    return y;
+}
+
+rangeTreeY::rangeTreeY(Point v, rangeTreeX* l, rangeTreeX* r) : val{v}
+{
+    left = xy(l);
+    right = xy(r);
 }
 
 rangeTreeX::rangeTreeX(Point v, rangeTreeX* l, rangeTreeX* r) : val{v}, left{l}, right{r}
@@ -58,9 +72,9 @@ vector<rangeTreeX*> rangeTreeX::topSearch(vector<rangeTreeX*> bound, int x1, int
 {
     vector<rangeTreeX*> ret;
     for(int i = 0; i < bound.size(); ++i) {
-        if (bound[i]->left && !std::find(bound[i]->left, bound.begin(), bound.end()))
+        if (bound[i]->left && std::find(bound.begin(), bound.end(), bound[i]->left) == bound.end())
             ret.push_back(bound[i]->left);
-        else if (bound[i]->right && !std::find(bound[i]->right, bound.begin(), bound.end())) 
+        else if (bound[i]->right && std::find(bound.begin(), bound.end(), bound[i]->right) == bound.end()) 
             ret.push_back(bound[i]->right);
     }
     return ret;
@@ -72,7 +86,7 @@ vector<rangeTreeX*> rangeTreeX::rangeSearch(rangeTreeX* root, Point s1, Point s2
     vector<rangeTreeX*> top = topSearch(bound, s1.x, s2.x);
     vector<rangeTreeX*> ret;
     for (int j = 0; j < bound.size(); ++j)
-        if (bound[j]->val.y >= s1.y && bound[j]->val.y <= s2.y) ret.push_back(bound[i]);
+        if (bound[j]->val.y >= s1.y && bound[j]->val.y <= s2.y) ret.push_back(bound[j]);
     for (int k = 0; k < top.size(); ++k)
         //BST::rangeSearch(top[k]->y, s1.y, s2.y)
         //Adjoin when returns rangeTreeXs

@@ -12,6 +12,8 @@ class rangeTreeY : public AVL
     rangeTreeY *left, *right;
 
 public:
+    rangeTreeY* xy(rangeTreeX* x, rangeTreeY* y = nullptr);
+    void insert(rangeTreeY* root, Point i);
     rangeTreeY(rangeTreeX* v);
     rangeTreeY(Point v, rangeTreeX *l = nullptr, rangeTreeX *r = nullptr);
 };
@@ -25,10 +27,12 @@ class rangeTreeX : public AVL
     vector<rangeTreeX*> boundSearch(rangeTreeX* root, int x1, int x2);
     vector<rangeTreeX*> topSearch(vector<rangeTreeX*> bound, int x1, int x2);
     ~rangeTreeX();
-
 public:
     rangeTreeX(Point v, rangeTreeX *l = nullptr, rangeTreeX *r = nullptr);
     void insert(rangeTreeX* root, Point i);
     void del(rangeTreeX* root, Point d);
+    Point getVal() { return val; }
+    rangeTreeX* getLeft() { return left; }
+    rangeTreeX* getRight() { return right; }
     vector<rangeTreeX*> rangeSearch(rangeTreeX* root, Point s1, Point s2);
 };

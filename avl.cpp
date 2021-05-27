@@ -20,7 +20,6 @@ BST* BST::insert(BST* root, int i)
     else root->left = insert(root->left, i);
 
     return root;
-
 }
 
 //Updates height after insert/delete
