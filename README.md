@@ -7,5 +7,5 @@ What is a rangeTree? A 2d AVL where each AVL node of the first layer stores an A
 
 Why? very fast 2d rangeSearch. returns all the points between [x1,y1] x [x2,y2]
 
-To Do: Fix rangeTree rangeSearch and constructor </br>
+To Do: Fix rangeTree rangeSearch </br>
 Change to smart_pointers
