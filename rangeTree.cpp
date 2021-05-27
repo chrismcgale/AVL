@@ -38,7 +38,7 @@ rangeTreeX::~rangeTreeX()
 
 void rangeTreeX::fixY()
 {
-    if(y != nullptr )delete y;
+    if(y != nullptr ) delete y;
     y = new rangeTreeY(val,left,right);
     left->fixY();
     right->fixY();

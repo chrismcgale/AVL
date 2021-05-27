@@ -17,11 +17,11 @@ class BST {
         ~BST();
     public:
         friend class AVL;
-        BST(int data = 0, int height = -1);
+        BST() : data{-1}, height{-1} {}
         BST* insert(BST* root, int i);
         BST* del(BST* root, int d);
         BST* search(BST* root, int s);
-        vector<BST*> BST::rangeSearch(BST* root, int x1, int x2);
+        vector<BST*> rangeSearch(BST* root, int x1, int x2);
 };
 
 class AVL : public BST {

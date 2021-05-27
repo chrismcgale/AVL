@@ -170,7 +170,7 @@ AVL* AVL::search(AVL* root,int s)
 // * Change to return boundary and topmost inside seperatly *
 vector<BST*> BST::rangeSearch(BST* root, int x1, int x2)
 {
-    if (root == nullptr) return;
+    if (root == nullptr) return vector<BST*>();
     if (x2 <= root->data && root->data <= x1) {
         vector<BST*> L = BST::rangeSearch(root->left, x1, x2);
         vector<BST*> R = BST::rangeSearch(root->right, x1, x2);
